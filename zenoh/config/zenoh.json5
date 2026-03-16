@@ -1,0 +1,18 @@
+{
+  "mode": "router",
+  "plugins": {
+    "rest": {
+      "__required__": true,
+      "http_port": "8000"
+    },
+    "storage_manager": {
+      "__required__": true,
+      "storages": {
+        "vehicle": {
+          "key_expr": "Vehicle/**",
+          "volume": "memory"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+ditto/
+__pycache__/
+*.pyc
+.env

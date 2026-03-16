@@ -1,0 +1,23 @@
+
+services:
+  kuksa-databroker:
+    image: ghcr.io/eclipse-kuksa/kuksa-databroker:main
+    container_name: kuksa
+    ports:
+      - "55555:55555"   # gRPC port
+      - "8090:8090"     # REST/WS port
+    volumes:
+      - ./kuksa/config:/config
+    command: --vss /config/vss.json --insecure
+  zenoh-router:
+    image: eclipse/zenoh:latest
+    container_name: zenoh
+    ports:
+      - "7447:7447/tcp"
+      - "7447:7447/udp"
+      - "8000:8000"      # REST plugin
+    volumes:
+      - ./zenoh/config:/config
+    command: --config /config/zenoh.json5
+
+
