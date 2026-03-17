@@ -26,27 +26,30 @@ The vehicle data source for this pipeline is implemented using python based simu
  1. Clone this repository 
 
  2. Clone the Ditto repository (in a WSL Ubuntu terminal) with
-     git clone https://github.com/eclipse-ditto/ditto.git
+    - git clone https://github.com/eclipse-ditto/ditto.git
 
  3. Run the following commands 
-    cd ditto/deployment/docker
-    cp dev.env .env
+    - cd ditto/deployment/docker
+    - cp dev.env .env
 
  4. Go to ditto/deployment/docker/.env and replace its contents with the following:
-    DITTO_VERSION=3.7.0
+    - DITTO_VERSION=3.7.0
 
- 5. Run docker compose up -d 
+ 5. Run 
+    - docker compose up -d 
 
- 6. Go back to the root directory of the repo with cd .. 
+ 6. Go back to the root directory of the repo with 
+    - cd .. 
 
  7. Once your back in VehiclePipeline run docker compose up -d again 
 
- 8. run bash dittoextra/bootstrap.sh
+ 8. Run 
+    - bash dittoextra/bootstrap.sh
 
- 9. Run each of the following files from a seperate WSL terminal in the following order(If experiencing difficulties try running will the full path which would start along the lines of /mnt/c/...../VehiclePipeline)
-    python3 kuksa/sim/feed.py
-    python3 zenoh/bridge/kuksa2zenoh.py
-    python3 dittoextra/zenoh2ditto.py
+ 9. Run each of the following files from a seperate WSL terminal in the following order (If experiencing difficulties try running will the full path which would start along the lines of /mnt/c/...../VehiclePipeline)
+    - python3 kuksa/sim/feed.py
+    - python3 zenoh/bridge/kuksa2zenoh.py
+    - python3 dittoextra/zenoh2ditto.py
  
  10. The pipeline should be successfully running! you can check resource utilization in Docker Desktop 
 
