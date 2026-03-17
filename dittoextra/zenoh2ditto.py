@@ -1,4 +1,3 @@
-# ditto/setup/zenoh_to_ditto.py
 import zenoh, json, requests
 
 DITTO_BASE = 'http://localhost:8080/api/2/things/my.namespace:vehicle-01'

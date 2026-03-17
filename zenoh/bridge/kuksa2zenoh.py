@@ -1,5 +1,3 @@
-# zenoh/bridge/kuksa_to_zenoh.py
-# Publishes VSS signals as Eclipse uProtocol UMessages over Zenoh
 import zenoh, json
 from kuksa_client.grpc import VSSClient
 from uprotocol.uuid.factory.uuidfactory import Factories
