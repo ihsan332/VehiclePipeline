@@ -8,6 +8,9 @@ FAULTS = {
     "Vehicle.OBD.ThrottlePosition": 101111111111111111111111110.0,
 }
 
+# This fie was written during Iteration 1, because of this it does not 
+# show as a new file creation in iteration 2 but as a modfication 
+# of an existing file from the initial proposed modification in Iteration 1
 with VSSClient("127.0.0.1", 55555) as client:
     for i in range(10000):
         t0 = datetime.datetime.now(datetime.timezone.utc)
