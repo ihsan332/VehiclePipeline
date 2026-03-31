@@ -9,10 +9,10 @@ FAULTS = {
 }
 
 with VSSClient("127.0.0.1", 55555) as client:
-    for i in range(1):
+    for i in range(10000):
         t0 = datetime.datetime.now(datetime.timezone.utc)
         client.set_current_values({k: Datapoint(v) for k, v in FAULTS.items()})
-        print(f"[{i+1}/{1}] T0={t0.isoformat()} — fault injected")
-        time.sleep(1)
+        print(f"[{i+1}/{10000}] T0={t0.isoformat()} — fault injected")
+        time.sleep(0.01)
 
 print("Done.")

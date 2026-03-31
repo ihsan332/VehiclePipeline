@@ -38,6 +38,8 @@ def main():
         print("[bridge] uProtocol/Zenoh bridge running...")
         for updates in kuksa.subscribe_current_values(WATCH_PATHS):
             for path, datapoint in updates.items():
+                if datapoint is None or datapoint.value is None:
+                    continue
                 key     = vss_to_zenoh_key(path)
                 msg     = build_umessage(path, datapoint.value, str(datapoint.timestamp))
                 payload = json.dumps(msg)
