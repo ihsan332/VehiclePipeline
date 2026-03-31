@@ -12,6 +12,26 @@ Ditto is used as a backend digital twin framework, maintaining the vehicle's cur
 **Vehicle Data Source**:
 The vehicle data source for this pipeline is implemented using python based simulator. This is called feed.py. This script generates and publishes raw vehicle data telemetry to represent real-time driving conditions. These data variables are speed, tire pressure and various other OBD metrics. This being the origin point of the system's data flow, the simulator pushes their raw signals to the Eclipse Kuksa Data Abstraction layer, where the signals are received and normalized, and stored and passed along the pipeline.
 
+### Iteration 2
+
+**System Extension**: 
+The extension that was implemented was to introduce sensor faults with abnormal or impossible values (A stated speed of 400km/h in a car that can only go 170km/h). These values were also injected repeatedly at a rate of 10 injections per second. This sharp increase in rate (from the default loop, which runs once every 2 seconds) is implemented to observe system behaviour under extremely high loads that could be caused by faulty software or a malicious attack. The default and injection values are outlined below.
+
+**Non-Functional Testing**: 
+Non-Functional tests involved measuring the CPU and memory usage during:
+ - Regular system operation
+ - Abnormal conditions
+
+By running the injection script to throw abnormal values over the course of ~1.5 minutes, we can observe how the system reacts before, during and after the injections.
+
+**Experiment Analysis**:
+During normal operations CPU stayed low at around 35%. When the injection started, CPU usage spiked, reaching up to 189.7%. This is because the Zenoh bridge and Ditto Rest API were flooded with multiple PATCH requests per second, as well as the normal feed. While the script is running, the system is processing, but remains under much higher loads than normal. CPU usage stabilized after the injections were complete at 22:04:00 and maintained the same numbers as before the injection, indicating that a full recovery of the system was successfully achieved.
+
+Before, during and after injection, memory stayed consistent throughout the test at 2.47GB. This means the pipeline has no memory leak under higher loads. This also means that Ditto, Kuksa and Zenoh were all able to manage messages without an increase in memory.
+
+Overall, the system is CPU sensitive but remains memory stable under high injection conditions. The pipeline shows the ability to successfully process all injection signals without crashing or dropping the connections. That and the fact that signals returned to normal after injection prove the systems are still functional. 
+
+
 ## Prerequisites
 
 - Windows with WSL2 enabled
@@ -50,6 +70,7 @@ The vehicle data source for this pipeline is implemented using python based simu
     - python3 kuksa/sim/feed.py
     - python3 zenoh/bridge/kuksa2zenoh.py
     - python3 dittoextra/zenoh2ditto.py
+    - **for iteration 2** python3 kuksa/sim/inject.py (if you want to start the injections)
  
  10. The pipeline should be successfully running! you can check resource utilization in Docker Desktop 
 
